@@ -32,7 +32,9 @@
 
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     @stack('style')
+    @stack('styles')
 </head>
 
 <body>

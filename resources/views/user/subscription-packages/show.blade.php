@@ -17,19 +17,21 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route('subscription-packages-checkout.page', $package->id) }}" class="btn btn-primary btn-lg px-4 fw-bold shadow-sm">
-            <i class="bi bi-cart-check-fill me-2"></i> Langganan Sekarang
-        </a>
+        <div class="mb-4">
+            <a href="{{ route('subscription-packages-checkout.page', $package->id) }}" class="btn btn-primary btn-lg px-4 fw-bold shadow-sm rounded-pill">
+                <i class="fa-solid fa-crown me-2"></i> Langganan Sekarang
+            </a>
+        </div>
 
         {{-- form search --}}
         <form action="{{ route('subscription.books', $package->id) }}" method="GET" class="mb-4">
             <div class="input-group shadow-sm">
                 <span class="input-group-text bg-white border-end-0">
-                    <i class="bi bi-search"></i>
+                    <i class="fa-solid fa-magnifying-glass text-secondary"></i>
                 </span>
-                <input type="text" name="search" class="form-control border-start-0" placeholder="Cari dalam paket ini"
+                <input type="text" name="search" class="form-control border-start-0" placeholder="Cari dalam paket ini..."
                     value="{{ request('search') }}">
-                <button class="btn btn-outline-primary" type="submit">Cari</button>
+                <button class="btn btn-primary px-4" type="submit">Cari</button>
             </div>
         </form>
 

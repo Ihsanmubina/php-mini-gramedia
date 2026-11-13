@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Checkout;
+use App\Models\SubscriptionPackageUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash; //hash
 use Illuminate\Support\Facades\Auth; //auth
@@ -87,14 +89,33 @@ class UserController extends Controller
             $request->session()->regenerateToken();
 
             if(Auth::user()->role == "admin") {
-                return redirect()->route('admin.dashboard')->with('succsess', 'Berhasil Login');
+                return redirect()->route('admin.dashboard')->with('success', 'Berhasil Login');
             } else {
-                return redirect()->route('home')->with('succsess', 'Berhasil Login');
+                return redirect()->route('home')->with('success', 'Berhasil Login');
             }
         } else {
-            return redirect()->route('login')->with('erorr', 'Email dan password salah. Coba lagi!')->withInput();
+            return redirect()->route('login')->with('error', 'Email dan password salah. Coba lagi!')->withInput();
         }
 
+    }
+
+    public function profile()
+    {
+        $userId = Auth::id();
+
+        $totalBooks = Checkout::where('user_id', $userId)->count();
+
+        $totalSubscriptions = SubscriptionPackageUser::where('user_id', $userId)->count();
+
+        $subscriptions = SubscriptionPackageUser::with('subscriptionPackage')
+            ->where('user_id', $userId)
+            ->get();
+
+        $checkouts = Checkout::where('user_id', $userId)
+            ->latest()
+            ->get();
+
+        return view('user.profile', compact('totalBooks', 'totalSubscriptions', 'subscriptions', 'checkouts'));
     }
 
     public function logout(Request $request) {

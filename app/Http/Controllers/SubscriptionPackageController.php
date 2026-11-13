@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Yajra\DataTables\Facades\DataTables;
+use App\Exports\SubscriptionPackageExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SubscriptionPackageController extends Controller
 {
@@ -24,6 +26,11 @@ class SubscriptionPackageController extends Controller
 
     //     return view('admin.subscription-packages.index', compact('SubscriptionPackageControllers'));
     // }
+
+    public function export()
+    {
+        return Excel::download(new SubscriptionPackageExport, 'data-paket-langganan.xlsx');
+    }
 
     public function index(Request $request)
     {

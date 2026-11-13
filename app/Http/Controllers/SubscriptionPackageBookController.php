@@ -16,7 +16,12 @@ class SubscriptionPackageBookController extends Controller
         $subscriptionPackage = SubscriptionPackage::findOrFail($subscriptionPackageId);
 
         if ($request->ajax()) {
-            $model = Book::query();
+            $model = Book::with('bookCategory');
+
+            // Ambil daftar book_id yang sudah tertaut sekali saja (mencegah query berulang di setiap baris)
+            $subscriptionPackageBook = $subscriptionPackage->subscriptionPackageBooks()
+                ->pluck('book_id')
+                ->toArray();
 
             return DataTables::eloquent($model)
                 ->addIndexColumn()
@@ -30,13 +35,9 @@ class SubscriptionPackageBookController extends Controller
                 })
                 ->editColumn('book_category_id', function ($row) {
                     // book category diambil dari func relasi yang ada di model book 
-                    return $row->bookCategory->name;
+                    return $row->bookCategory?->name ?? '-';
                 })
-                ->addColumn('checkAdded', function ($row) use ($subscriptionPackage) {
-                    // pluck : ambil semua dari book_id dari subscriptionPackageBook, lalu ubah menjadi array
-                    $subscriptionPackageBook = $subscriptionPackage->subscriptionPackageBooks()
-                        ->pluck('book_id')
-                        ->toArray();
+                ->addColumn('checkAdded', function ($row) use ($subscriptionPackageBook) {
                     // cek apakah book_id dari row ada dalam array subscriptionPackageBook, jika ada maka buku sudah tertaut dengan paket langganan ini (checkbox dihilangkan)
                     return in_array($row->id, $subscriptionPackageBook) ? 'Ya' : 'Tidak';
                 })

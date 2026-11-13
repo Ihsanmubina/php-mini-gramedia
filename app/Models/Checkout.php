@@ -14,8 +14,7 @@ class Checkout extends Model
 {
     public function checkoutBooks(): HasMany 
     {
-        return $this->hasMany(Checkout::class);
-        
+        return $this->hasMany(CheckoutBook::class);
     }
 
     public function user(): BelongsTo

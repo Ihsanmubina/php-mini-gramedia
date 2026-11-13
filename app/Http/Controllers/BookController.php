@@ -7,10 +7,17 @@ use App\Models\BookCategory;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Book;
 use Yajra\DataTables\Facades\DataTables;
+use App\Exports\BookExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class BookController extends Controller
 {
+    public function export()
+    {
+        return Excel::download(new BookExport, 'data-buku.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -119,9 +126,10 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $book = Book::where('id', $id)->with('subscriptionPackageBooks')->first();
+        return view('user.books.show', compact('book'));
     }
 
     /**

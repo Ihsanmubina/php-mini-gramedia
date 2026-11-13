@@ -48,7 +48,9 @@
                             <p>Total Bayar</p>
                             <h4 class="text-primary">Rp{{ number_format($subscriptionPackage->price, 0, ',', '.') }}</h4>
                         </div>
-                        <button type="submit" class="btn btn-primary rounded-pil mt-2 w-100">Bayar sekarang</button>
+                        <button type="submit" class="btn btn-primary rounded-pill mt-3 w-100 py-2 fw-bold shadow-sm">
+                            <i class="fa-solid fa-lock me-1"></i> Bayar Sekarang
+                        </button>
                     </form>
                 </div>
             </div>

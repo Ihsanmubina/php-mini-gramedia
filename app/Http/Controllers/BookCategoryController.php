@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\BookCategory;
 use Illuminate\Http\Request;
-
+use App\Exports\BookCategoryExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class BookCategoryController extends Controller
 {
+    public function export()
+    {
+        return Excel::download(new BookCategoryExport, 'data-kategori-buku.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -19,4 +19,9 @@ class SubscriptionPackage extends Model
     {
         return $this->hasMany(SubscriptionPackageUser::class);
     }
+
+    public function getNamePackageAttribute()
+    {
+        return $this->attributes['name_package'] ?? $this->attributes['name'] ?? null;
+    }
 }

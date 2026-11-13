@@ -30,4 +30,9 @@ class Book extends Model
     {
         return $this->hasMany(SubscriptionPackageBook::class);
     }
+
+    public function subscriptionPackageBooks(): HasMany
+    {
+        return $this->hasMany(SubscriptionPackageBook::class);
+    }
 }

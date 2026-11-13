@@ -5,9 +5,8 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use App\Models\BookCategory;
 
-class navbar extends Component
+class Footer extends Component
 {
     /**
      * Create a new component instance.
@@ -22,13 +21,6 @@ class navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        $categories = BookCategory::orderBy('name', 'asc')->get();
-
-
-        return view('components.navbar', [
-            'navbarCategories' => $categories
-        ]);
-
-
+        return view('components.footer');
     }
 }
